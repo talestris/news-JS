@@ -1,6 +1,6 @@
 import AppLoader from './appLoader';
 
-interface Article {
+export interface Article {
     source: { id: string | null; name: string };
     author: string | null;
     title: string;
@@ -11,7 +11,7 @@ interface Article {
     content: string;
 }
 
-interface Source {
+export interface Source {
     id: string;
     name: string;
     description: string;
@@ -21,13 +21,13 @@ interface Source {
     country: string;
 }
 
-interface NewsResponse {
+export interface NewsResponse {
     status: string;
     totalResults: number;
     articles: Article[];
 }
 
-interface SourcesResponse {
+export interface SourcesResponse {
     status: string;
     sources: Source[];
 }
