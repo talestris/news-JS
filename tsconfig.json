@@ -3,8 +3,9 @@
     "compilerOptions": {
         "module": "esnext",
         "target": "es2022",
-        "moduleResolution": "node10",
+        "moduleResolution": "bundler",
         "lib": ["es2022", "DOM"],
+        "types": ["node", "webpack-env"],
 
         "sourceMap": true,
 
@@ -13,7 +14,8 @@
         "skipLibCheck": true,
         "noImplicitAny": true,
         "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "noUncheckedSideEffectImports": false
     },
     "include": ["src/**/*"]
 }
