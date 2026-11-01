@@ -60,7 +60,12 @@ class Loader {
     }
 
     load<T>(method: HttpMethod, endpoint: string, callback: Callback<T>, options: Readonly<UrlOptions> = {}): void {
-        fetch(this.makeUrl(options, endpoint), { method })
+        fetch(this.makeUrl(options, endpoint), {
+            method,
+            headers: {
+                'X-Api-Key': this.options.apiKey ?? '',
+            },
+        })
             .then(this.errorHandler)
             .then((res) => res.json())
             .then((data: T) => callback(data))
