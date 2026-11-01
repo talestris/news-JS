@@ -15,6 +15,11 @@ interface RequestOptions {
 
 type Callback<T> = (data: T) => void;
 
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+}
+
 class Loader {
     private baseLink: string;
     private options: UrlOptions;
@@ -30,7 +35,7 @@ class Loader {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load('GET', endpoint, callback, options);
+        this.load(HttpMethod.GET, endpoint, callback, options);
     }
 
     errorHandler(res: Response): Response {
@@ -43,8 +48,8 @@ class Loader {
         return res;
     }
 
-    makeUrl(options: UrlOptions, endpoint: string): string {
-        const urlOptions: UrlOptions = { ...this.options, ...options };
+    makeUrl(options: Readonly<UrlOptions>, endpoint: string): string {
+        const urlOptions: Partial<UrlOptions> = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
@@ -54,7 +59,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load<T>(method: string, endpoint: string, callback: Callback<T>, options: UrlOptions = {}): void {
+    load<T>(method: HttpMethod, endpoint: string, callback: Callback<T>, options: Readonly<UrlOptions> = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
